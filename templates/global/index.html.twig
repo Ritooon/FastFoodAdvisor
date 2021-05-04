@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FFA - Accueil{% endblock %}
+
+{% block body %}
+<header>
+    <div class="overlay"></div>
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+        <source src="{{asset('videos/kebab.mp4')}}" type="video/mp4">
+    </video>
+    <div class="container h-100">
+        <div class="d-flex h-100 text-center align-items-center">
+            <div class="w-100 text-white">
+                <h1 class="display-3 text-white">Fast food Advisor</h1>
+                <p class="lead mb-0">Trouver le meilleur fast-food autour de vous</p>
+            </div>
+        </div>
+     </div>
+</header>
+
+<div class="row content-container">
+
+    {# Card Map #}
+    <div class="row justify-content-center">
+        <div class="col-10 mt-4">
+            <div class="card mb-3 card-map border-0">
+                <div class="row no-gutters">
+                    <div class="col-md-7 card-container bg-orange text-white">
+                        <div class="card-body">
+                            <h2 class="card-title">🍔 Préparez votre estomac</h2>
+                            <p class="card-text">Vous allez quelque part et vous devrez sûrement vous restaurer ? 
+                            Planifiez votre pause déj' en retrouvant les fast-foods proches de votre destination !</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-5 card-bg-img-map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}
