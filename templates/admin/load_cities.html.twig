@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FFA - Admin chargement des villes{% endblock %}
+
+{% block body %}
+
+
+
+
+    <h1 class="w-100 text-white p-4 text-center bg-info">Ces données seront ajoutées à la base de données</h1>
+    
+    <div class="row content-container justify-content-center">
+        
+        <div class="col p-2">
+            <strong>Nomde villes ajoutées : </strong><label id="nbCitiesAdded">0</label> / <strong>{{nbCities}}</strong>
+        </div>
+
+        <div class="admin-content-bloc w-100">
+            {% for row, city in cities %}
+                {{city.zipcode}} | {{city.name}}  | {{city.latitude}}  | {{city.longitude}} <br />
+            {% endfor %}
+        </div>   
+
+        <a href="#" id="loadCitiesBtn" data-nbcities="{{nbCities}}" class="btn btn-success p-4 m-4">Envoyer en base de données</a>
+        {# <a href="{{ path('admin/do-load-cities') }}" class="btn btn-success p-4 m-4">Envoyer en base de données</a> #}
+    </div>
+
+    
+{% endblock %}

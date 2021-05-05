@@ -30,16 +30,6 @@ class Restaurants
     private $address;
 
     /**
-     * @ORM\Column(type="string", length=15)
-     */
-    private $zipcode;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $city;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $email;
@@ -63,6 +53,12 @@ class Restaurants
      * @ORM\OneToMany(targetEntity=Notes::class, mappedBy="restaurant")
      */
     private $notes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Cities::class, inversedBy="restaurants")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $city;
 
     public function __construct()
     {
@@ -94,30 +90,6 @@ class Restaurants
     public function setAddress(string $address): self
     {
         $this->address = $address;
-
-        return $this;
-    }
-
-    public function getZipcode(): ?string
-    {
-        return $this->zipcode;
-    }
-
-    public function setZipcode(string $zipcode): self
-    {
-        $this->zipcode = $zipcode;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
 
         return $this;
     }
@@ -196,6 +168,18 @@ class Restaurants
                 $note->setRestaurant(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCity(): ?Cities
+    {
+        return $this->city;
+    }
+
+    public function setCity(?Cities $city): self
+    {
+        $this->city = $city;
 
         return $this;
     }

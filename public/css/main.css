@@ -67,6 +67,59 @@ header .overlay {
     border-radius: 1.5rem;
 }
 
+/* HOME - SEARCH */
+
+
+.search a {
+    text-decoration: none;
+}
+
+.search {
+    margin-bottom: auto;
+    margin-top: auto;
+    height: 70px;
+    background-color: #fff;
+    border-radius: 40px;
+    padding: 10px;
+
+    -webkit-box-shadow: 5px 5px 0px 0px #ff764a, 10px 10px 0px 0px #ffa689, 15px 15px 0px 0px #ffc4b1, 20px 20px 0px 0px #ffdfd5, 25px 25px 0px 0px #ffeae3, 5px 5px 15px 5px rgb(255 118 74 / 0%);
+    box-shadow: 5px 5px 0px 0px #ff764a, 10px 10px 0px 0px #ffa689, 15px 15px 0px 0px #ffc4b1, 20px 20px 0px 0px #ffdfd5, 25px 25px 0px 0px #ffeae3, 5px 5px 15px 5px rgb(255 118 74 / 0%);
+}
+
+.search_input {
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    margin-top: 5px;
+    caret-color: transparent;
+    line-height: 40px;
+    transition: width 0.4s linear;
+}
+
+.search .search_input {
+    padding: 0 10px;
+    width: 550px;
+    caret-color: #ff764a;
+    transition: width 0.4s linear;
+}
+
+.search:hover>.search_icon {
+    background: #ff764a;
+    color: #fff;
+}
+
+.search_icon {
+    height: 50px;
+    width: 50px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: white;
+    background-color: black;
+}
 
 /* HOME - CARD MAP */
 .card-map .card-container {
@@ -88,4 +141,13 @@ header .overlay {
     background-size: cover;
     border-top-right-radius: 1.5rem;
     border-bottom-right-radius: 1.5rem;
+}
+
+/* ADMIN */
+
+.admin-content-bloc {
+    background-color: #ccc;
+    padding: 15px 10px;
+    height: 450px;
+    overflow: auto;
 }
