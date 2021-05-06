@@ -52,6 +52,7 @@ header .overlay {
 /* MISC */
 
 .bg-orange { background-color: #ff764a !important; }
+.text-moon { color: #d4d47a; }
 
 .content-container { 
     max-width: 1400px; 
@@ -66,6 +67,8 @@ header .overlay {
 .rounded-3 {
     border-radius: 1.5rem;
 }
+
+
 
 /* HOME - SEARCH */
 
@@ -143,11 +146,49 @@ header .overlay {
     border-bottom-right-radius: 1.5rem;
 }
 
+/* FROM REGISTER / SIGNIN */
+
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .checkbox {
+    font-weight: 400;
+}
+.form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
 /* ADMIN */
 
 .admin-content-bloc {
     background-color: #ccc;
     padding: 15px 10px;
-    height: 450px;
+    height: 350px;
     overflow: auto;
 }
+
+
+/* DARK THEME */
+body.dark-theme { background-color: #3b3d46; }
+body.dark-theme .card-map { background-color: transparent;}
+body.dark-theme .form-signin label { color: white; }

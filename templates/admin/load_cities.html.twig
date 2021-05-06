@@ -10,9 +10,26 @@
     <h1 class="w-100 text-white p-4 text-center bg-info">Ces données seront ajoutées à la base de données</h1>
     
     <div class="row content-container justify-content-center">
-        
+
+        <div class="col-12 p-2">
+            <div class="alert alert-dismissible alert-warning">
+                <h4 class="alert-heading">🚨 Attention 🚨</h4>
+                <p class="mb-0">
+                    ⏳ Ce chargement est long, mais nécessaire pour peupler la base données.<br/>
+                    ⛔ Ne pas quitter la page et attendre la fin !<br/>
+                    ☕ Après avoir cliqué sur le bouton d'import (Qui met un peu de temps à arriver lui aussi), aller se faire un café.<br/>
+                    🧘🏻 Soyez patient.
+                </p>
+            </div>
+        </div>
+            
         <div class="col p-2">
-            <strong>Nomde villes ajoutées : </strong><label id="nbCitiesAdded">0</label> / <strong>{{nbCities}}</strong>
+            <strong>Nomde à ajouter : {{nbCities}}</strong>
+
+            <div class="progress" id="admin-cities-progress" style="display: none;">
+                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" 
+                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+            </div>
         </div>
 
         <div class="admin-content-bloc w-100">

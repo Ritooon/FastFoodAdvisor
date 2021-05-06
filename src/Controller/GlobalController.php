@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Cities;
+use App\Entity\Users;
+use App\Form\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class GlobalController extends AbstractController
 {
@@ -21,75 +25,46 @@ class GlobalController extends AbstractController
     }
 
     /**
-     * @Route("/admin/load-cities", name="admin/load-cities")
+     * @Route("/toogle_theme/{theme}", name="toogle_theme")
      */
-    public function loadCities()
+    public function toogleTheme($theme)
     {
-        $row = 1;
-        $cities = [];
-        if (($handle = fopen("../scripts/cities.csv", "r")) !== FALSE) 
-        {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
-            {
-                $num = count($data);
-                $row++;
-                for ($c=0; $c < $num; $c++) 
-                {
-                    $cities[$row]['zipcode'] = $data[0];
-                    $cities[$row]['name'] = $data[1];
-                    $cities[$row]['latitude'] = $data[2];
-                    $cities[$row]['longitude'] = $data[3];
-                }
-            }
-            fclose($handle);
+        if($theme == 'dark-theme' || $theme == 'light-theme') {
+            setcookie("theme", $theme, mktime(). time()+60*60*24*30);
         }
-
-        return $this->render('admin/load_cities.html.twig', [
-            'cities' => $cities,
-            'nbCities' => $row
-        ]);
+        
+        return $this->render('global/blank.html.twig');
     }
 
     /**
-     * @Route("/admin/do-load-cities/{maxRow}", name="admin/do-load-cities")
+     * @Route("/account_created", name="account_created")
      */
-    public function doLoadCities(EntityManagerInterface $emi, $maxRow)
+    public function createdAccountMessage(): Response
     {
-        set_time_limit(0);
-        
-        $row = 1;
-        $city = null;
-        
-        if (($handle = fopen("../scripts/cities.csv", "r")) !== FALSE) 
+        return $this->render('global/account_created.html.twig');
+    }
+
+    /**
+     * @Route("/register", name="register")
+     */
+    public function register(Request $request, EntityManagerInterface $emi, UserPasswordEncoderInterface $encoder): Response
+    {
+        $user = new Users();
+        $form = $this->createForm(RegisterType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
         {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
-            {
-                if($row <= $maxRow && $row > ($maxRow-100))
-                {
-                    $city = new Cities();
-                    $city->setName($data[1])->setZipcode($data[0])->setLatitude($data[2])->setLongitude($data[3]);
-                    $emi->persist($city);
-                    
-                    if($row == $maxRow )
-                    {
-                        $emi->flush(); 
-                        break; 
-                    }
-                    else
-                    {
-                        $row++; 
-                    }                       
-                }
-                else
-                {
-                    $row++;
-                }
-            }
-            fclose($handle);
+            $crypted = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($crypted);
+            $user->setRoles('ROLE_USER');
+            $emi->persist($user);
+            $emi->flush();
+            return $this->redirectToRoute('account_created');
         }
 
-        return $this->render('admin/add_city_render.html.twig', [
-            'city' => $city,
+        return $this->render('global/register.html.twig', [
+            'form' => $form->createView()            
         ]);
     }
 }

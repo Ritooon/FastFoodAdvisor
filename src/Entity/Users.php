@@ -2,15 +2,20 @@
 
 namespace App\Entity;
 
-use App\Repository\UsersRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UsersRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UsersRepository::class)
+ * @UniqueEntity(fields={"username"}, message="Aïe Aïe Aïe, ce pseudo est visiblement déjà utilisé")
+ * @UniqueEntity(fields={"email"}, message="Seriez-vous par hasard déjà inscrit ?")
  */
-class Users
+class Users implements UserInterface
 {
     /**
      * @ORM\Id
@@ -35,6 +40,11 @@ class Users
     private $password;
 
     /**
+     * @Assert\EqualTo(propertyPath="password", message="Les mots de passe ne correspondent pas")
+     */
+    private $passwordVerification;
+
+    /**
      * @ORM\OneToMany(targetEntity=Notes::class, mappedBy="user")
      */
     private $notes;
@@ -42,7 +52,7 @@ class Users
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $role;
+    private $roles;
 
     public function __construct()
     {
@@ -90,6 +100,19 @@ class Users
         return $this;
     }
 
+    public function getPasswordVerification(): ?string
+    {
+        return $this->passwordVerification;
+    }
+
+    public function setPasswordVerification(string $passwordVerification): self
+    {
+        $this->passwordVerification = $passwordVerification;
+
+        return $this;
+    }
+
+
     /**
      * @return Collection|Notes[]
      */
@@ -120,15 +143,25 @@ class Users
         return $this;
     }
 
-    public function getRole(): ?string
+    public function getRoles(): ?string
     {
         return $this->role;
     }
 
-    public function setRole(string $role): self
+    public function setRoles(string $roles): self
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
+    }
+
+    public function getSalt()
+    {
+        
+    }
+
+    public function eraseCredentials()
+    {
+        
     }
 }

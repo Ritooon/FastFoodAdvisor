@@ -1,1 +1,6 @@
-City added : {{city.zipcode}} | {{city.name}} | {{city.latitude}} | {{city.longitude}}
+Cities added : 
+
+{% for city in cities %}
+    {{city.zipcode}} | {{city.name}} | {{city.latitude}} | {{city.longitude}}
+    <br />
+{% endfor %}
