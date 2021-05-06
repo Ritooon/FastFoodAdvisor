@@ -4,6 +4,9 @@
 
 🚧 En cours de construction 🏗️
 
+![image](https://user-images.githubusercontent.com/2474167/117319976-18d1f700-ae8c-11eb-8577-7e141e16ef04.png)
+
+
 ## Wait what ? C'est quoi ?! 🤔
 
 Ah la base, une blague, aujourd'hui une réalité.<br />
