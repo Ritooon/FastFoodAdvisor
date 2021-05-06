@@ -1,5 +1,9 @@
 # FastFoodAdvisor 🍔
 
+## 👷 Je n'ai pas fini Jackie !
+
+🚧 En cours de construction 🏗️
+
 ## Wait what ? C'est quoi ?! 🤔
 
 Ah la base, une blague, aujourd'hui une réalité.<br />
