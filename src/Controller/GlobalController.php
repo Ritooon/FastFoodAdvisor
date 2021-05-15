@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Cities;
 use App\Entity\Users;
 use App\Form\RegisterType;
+use App\Repository\RestaurantsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,10 +18,13 @@ class GlobalController extends AbstractController
     /**
      * @Route("/", name="accueil")
      */
-    public function index(): Response
+    public function index(RestaurantsRepository $restaurantsRepo): Response
     {
+        $bestRestaurants = $restaurantsRepo->getTopFive();
+
         return $this->render('global/index.html.twig', [
             'controller_name' => 'GlobalController',
+            'topFiveRestaurants' => $bestRestaurants
         ]);
     }
 

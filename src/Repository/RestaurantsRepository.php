@@ -19,6 +19,16 @@ class RestaurantsRepository extends ServiceEntityRepository
         parent::__construct($registry, Restaurants::class);
     }
 
+    public function getTopFive()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.average_note', 'ASC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Restaurants[] Returns an array of Restaurants objects
     //  */

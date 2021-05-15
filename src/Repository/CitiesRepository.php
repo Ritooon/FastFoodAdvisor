@@ -19,6 +19,17 @@ class CitiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Cities::class);
     }
 
+    public function getCitiesByNameOrZipCode($value, $limit)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.name LIKE :val OR c.zipcode LIKE :val')
+            ->setParameter('val', $value.'%')
+            ->orderBy('c.name', 'ASC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Cities[] Returns an array of Cities objects
     //  */

@@ -18,25 +18,41 @@
      </div>
 </header>
 
-<div class="row content-container justify-content-center">
+<div class="row content-container p-0 m-0 w-100 justify-content-center">
+
+    {# Dernières recherches #}
+    {# <div class="row justify-content-center mb-4 mt-4">
+        <div class="col-12 p-4">
+            <h3>Vos dernières recherches</h3>
+        </div>
+        <div class="col-12 p-4"></div>
+    </div> #}
 
     {# Recherche #}
     <div class="row justify-content-center">
-        <div class="col mt-4 p-4">
+        <div class="col-8 mt-4 p-4" style="
+        height: 26rem;
+        background-image: url(images/burger-tile.jpg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: right;
+    ">
+            <h3>On va où chef ?</h3>
             <div class="search">
-                <input class="search_input" type="text" name="" placeholder="Où allez-vous ?">
+                <input class="search_input" type="text" name="" list="CITY_LIST" placeholder="Où allez-vous ?">
                 <a href="#" class="search_icon">
                     <i class="fa fa-search"></i>
                 </a>
             </div>
+
+            <datalist id="CITY_LIST"></datalist>
         </div>
     </div>
      
-
     {# Card Map #}
-    <div class="row justify-content-center">
-        <div class="col-10 mt-4">
-            <div class="card mb-3 card-map border-0">
+    <div class="row w-100 mt-4 bg-orange justify-content-center">
+        <div class="col-12 p-0 h-100">
+            <div class="card card-map border-0">
                 <div class="row no-gutters">
                     <div class="col-md-7 card-container bg-orange text-white">
                         <div class="card-body">
@@ -55,6 +71,28 @@
     {# Vous pourriez aimer #}
 
     {# Restaurants les mieux notés #}
+    <div class="row w-100 mt-4 mb-4 justify-content-center">
+        <div class="col-12">
+            <h3>Hall Of Fame</h3>
+            <h5>Découvrez les restaurants les mieux notés de Fast-Food Advisor</h5>
+
+            <div class="row">
+                {% for restaurant in topFiveRestaurants %}
+                    <a class="col m-1 justify-content-center">
+                        <div class="row card-top5 p-2">
+                            <div class="col-4">
+                                <img class="card-img-top" src="{{asset('images/restaurants/restaurant.png')}}" />
+                            </div>
+                            <div class="col-8 p-0">
+                                <h5 class="card-title">{{restaurant.name}}</h5>
+                                <p class="card-text"><i class="fas fa-map-marker-alt text-danger"></i> {{restaurant.city.name}} ({{restaurant.city.zipcode}})</p>
+                            </div>
+                        </div>
+                    </a>                
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
 
 

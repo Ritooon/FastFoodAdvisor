@@ -54,11 +54,6 @@ header .overlay {
 .bg-orange { background-color: #ff764a !important; }
 .text-moon { color: #d4d47a; }
 
-.content-container { 
-    max-width: 1400px; 
-    margin: auto;
-}
-
 .rounder-tlbl { 
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
@@ -68,7 +63,15 @@ header .overlay {
     border-radius: 1.5rem;
 }
 
+a:hover { text-decoration: none; }
 
+/*  HOME - TOP 5 */
+
+.card-top5 { 
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
 /* HOME - SEARCH */
 
@@ -130,20 +133,12 @@ header .overlay {
     padding-bottom: 40px;
 }
 
-.card-map div:first-of-type {    
-    border: none;
-    border-top-left-radius: 1.5rem;
-    border-bottom-left-radius: 1.5rem;
-}
-
 .card-map .card-text { font-size: 1rem; }
 
 .card-bg-img-map {
     background: url("../images/street-map.jpg") black no-repeat center center scroll;
     background-position: center;
     background-size: cover;
-    border-top-right-radius: 1.5rem;
-    border-bottom-right-radius: 1.5rem;
 }
 
 /* FROM REGISTER / SIGNIN */
