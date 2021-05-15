@@ -10,7 +10,7 @@
 ## Wait what ? C'est quoi ?! 🤔
 
 Ah la base, une blague, aujourd'hui une réalité.<br />
-C'est un peu un "projet de fin d'études" . Je valide mes acquis en Symfony en réalisant un petit site à la TripAdvisor, maissauf quee là ce qu'on note c'est la malbouffe 🍔🍟
+C'est un peu un "projet de fin d'études" . Je valide mes acquis en Symfony en réalisant un petit site à la TripAdvisor, mais sauf que là ce qu'on note c'est la malbouffe 🍔🍟
 
 ## En quoi que c'est fait du coup ? 🤓
 
