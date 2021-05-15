@@ -1,9 +1,7 @@
 $(document).ready(function(){
 
     $('.search_input').off('keyup').on('keyup', delay(function(){
-        if(this.value.length > 0){
-            searchCity(this.value);
-        }
+        searchCity(this.value);
     }, 500));
 });
 
@@ -21,19 +19,25 @@ function delay(callback, ms) {
 
 function searchCity(val)
 {
-    $.ajax({
-        url: "get-cities-by-name-or-zipcode/"+val, 
-        type: 'get', 
-    }).done(function (response) {
-        if(response.length > 0)
-        {
-            for(let i = 0; i < response.length; i++)
+    $('#CITY_LIST').html('');
+    
+    if(val.length > 0)
+    {
+        $.ajax({
+            url: "get-cities-by-name-or-zipcode/"+val, 
+            type: 'get', 
+        }).done(function (response) {
+            if(response.length > 0)
             {
-                $('#CITY_LIST').append('<option data-value="' + response[i]['id'] + '">'+response[i]['name']+' ('+response[i]['zipcode']+')'+'</option>');
+                for(let i = 0; i < response.length; i++)
+                {
+                    $('#CITY_LIST').append('<option data-value="' + response[i]['id'] + '">'+response[i]['name']+' ('+response[i]['zipcode']+')'+'</option>');
+                }
             }
-        }
-             
-    }).fail(function (error) {
-        console.log(error);
-    });  
+                
+        }).fail(function (error) {
+            console.log(error);
+        });  
+    }
+
 }

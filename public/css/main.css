@@ -73,8 +73,22 @@ a:hover { text-decoration: none; }
     cursor: pointer;
 }
 
+.card-top5 .card-title {
+    word-break: break-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 /* HOME - SEARCH */
 
+.search-container {
+    height: 26rem;
+    background-image: url(../images/restaurator-tile.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+}
 
 .search a {
     text-decoration: none;
@@ -83,6 +97,7 @@ a:hover { text-decoration: none; }
 .search {
     margin-bottom: auto;
     margin-top: auto;
+    min-width: 500px;
     height: 70px;
     background-color: #fff;
     border-radius: 40px;
@@ -105,7 +120,7 @@ a:hover { text-decoration: none; }
 
 .search .search_input {
     padding: 0 10px;
-    width: 550px;
+    width: calc(100% - 50px);
     caret-color: #ff764a;
     transition: width 0.4s linear;
 }
@@ -128,6 +143,10 @@ a:hover { text-decoration: none; }
 }
 
 /* HOME - CARD MAP */
+.card-map-container {
+    height: 16rem;
+}
+
 .card-map .card-container {
     padding-top: 40px;
     padding-bottom: 40px;
@@ -172,6 +191,8 @@ a:hover { text-decoration: none; }
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.hall-of-fame-container { height: 16rem; }
 
 /* ADMIN */
 

@@ -24,7 +24,6 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="{{ asset('js/home.js') }}"></script>
         <script src="{{ asset('js/city_search.js') }}"></script>
-        <script src="{{ asset('js/admin.js') }}"></script>
         {% if is_granted('ROLE_ADMIN') %}
             <script src="{{ asset('js/admin.js') }}"></script>
         {% endif %}

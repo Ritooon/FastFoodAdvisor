@@ -29,15 +29,9 @@
     </div> #}
 
     {# Recherche #}
-    <div class="row justify-content-center">
-        <div class="col-8 mt-4 p-4" style="
-        height: 26rem;
-        background-image: url(images/burger-tile.jpg);
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: right;
-    ">
-            <h3>On va où chef ?</h3>
+    <div class="row w-100 justify-content-center search-container">
+        <h3 class="m-4 text-white">On va où chef ? </h3>
+        <div class="col-8 mt-4 p-4  d-flex align-items-end">
             <div class="search">
                 <input class="search_input" type="text" name="" list="CITY_LIST" placeholder="Où allez-vous ?">
                 <a href="#" class="search_icon">
@@ -50,10 +44,10 @@
     </div>
      
     {# Card Map #}
-    <div class="row w-100 mt-4 bg-orange justify-content-center">
+    <div class="row w-100 card-map-container bg-orange justify-content-center">
         <div class="col-12 p-0 h-100">
-            <div class="card card-map border-0">
-                <div class="row no-gutters">
+            <div class="card h-100 card-map border-0">
+                <div class="row h-100  no-gutters">
                     <div class="col-md-7 card-container bg-orange text-white">
                         <div class="card-body">
                             <h2 class="card-title">🍔 Préparez votre estomac</h2>
@@ -71,7 +65,7 @@
     {# Vous pourriez aimer #}
 
     {# Restaurants les mieux notés #}
-    <div class="row w-100 mt-4 mb-4 justify-content-center">
+    <div class="row w-100 mt-4 mb-4 hall-of-fame-container justify-content-center">
         <div class="col-12">
             <h3>Hall Of Fame</h3>
             <h5>Découvrez les restaurants les mieux notés de Fast-Food Advisor</h5>
