@@ -35,6 +35,8 @@ function reloadMapMarkers()
 
 function getMarkers(latMax, longMax)
 {
+    L.layerGroup().clearLayers();
+    
     $.ajax({
         url: "get-markers/"+latMax+"/"+longMax, 
         type: 'get', 
@@ -44,8 +46,9 @@ function getMarkers(latMax, longMax)
             for(let i = 0; i < response.length; i++)
             {
                 let restaurant = response[i];
+                let averageNote = restaurant.average_note == null ? '-' : restaurant.average_note;
                 let marker = L.marker([restaurant.latitude, restaurant.longitude]).addTo(ffaMap);
-                marker.bindPopup("<b>"+restaurant.name+"</b><br>Note moyenne : ");
+                marker.bindPopup("<b>"+restaurant.name+"</b><br>Note moyenne : " +  averageNote);
             }
         }
     }).fail(function (error) {

@@ -206,7 +206,7 @@ a:hover { text-decoration: none; }
 /* MAP */
 
 #map-container { 
-    height: calc(100vh - 150px); 
+    height: calc(100vh - 97px); 
     width: 100%;
 }
 
@@ -221,3 +221,4 @@ a:hover { text-decoration: none; }
 body.dark-theme { background-color: #3b3d46; }
 body.dark-theme .card-map { background-color: transparent;}
 body.dark-theme .form-signin label { color: white; }
+body.dark-theme #map-container { filter: invert(1); }
