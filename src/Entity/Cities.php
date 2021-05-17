@@ -29,7 +29,7 @@ class Cities
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
-     * @Groups({"list_cities"})
+     * @Groups({"list_cities", "list_markers"})
      */
     private $zipcode;
 
@@ -40,13 +40,13 @@ class Cities
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"list_cities"})
+     * @Groups({"list_cities", "list_markers"})
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"list_cities"})
+     * @Groups({"list_cities", "list_markers"})
      */
     private $longitude;
 

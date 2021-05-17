@@ -29,6 +29,30 @@ class RestaurantsRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getMarkers($latMax, $longMax)
+    {
+        $latMin = floatval($latMax-0.5);
+        $latMax = floatval($latMax+0.5);
+        $lngMin = floatval($longMax-0.5);
+        $lngMax = floatval($longMax+0.5);
+
+        $qb = $this->createQueryBuilder('r')
+            ->andWhere('r.latitude > :latMin')
+            ->andWhere('r.latitude < :latMax')
+            ->andWhere('r.longitude > :longMin')
+            ->andWhere('r.longitude < :longMax')
+            ->andWhere('r.isApproved = 1')
+            ->setParameter('latMin', $latMin)
+            ->setParameter('latMax', $latMax)
+            ->setParameter('longMin', $lngMin)
+            ->setParameter('longMax', $lngMax)
+            ->orderBy('r.id', 'ASC')
+            ->getQuery()
+        ;
+    
+        return $qb->getResult();
+    }
+
     // /**
     //  * @return Restaurants[] Returns an array of Restaurants objects
     //  */

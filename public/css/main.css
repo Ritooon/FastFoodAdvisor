@@ -203,6 +203,19 @@ a:hover { text-decoration: none; }
     overflow: auto;
 }
 
+/* MAP */
+
+#map-container { 
+    height: calc(100vh - 150px); 
+    width: 100%;
+}
+
+.reload-map-btn {
+    position: absolute;
+    left: 45%;
+    bottom: 1rem;
+    z-index: 400;
+}
 
 /* DARK THEME */
 body.dark-theme { background-color: #3b3d46; }

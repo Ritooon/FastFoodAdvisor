@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Repository\RestaurantsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,43 +16,43 @@ class Restaurants
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"list_restaurants"})
+     * @Groups({"list_restaurants", "list_markers"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"list_restaurants"})
+     * @Groups({"list_restaurants", "list_markers"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"list_restaurants"})
+     * @Groups({"list_restaurants", "list_markers"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"list_restaurants"})
+     * @Groups({"list_restaurants", "list_markers"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
-     * @Groups({"list_restaurants"})
+     * @Groups({"list_restaurants", "list_markers"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Groups({"list_restaurants"})
+     * @Groups({"list_restaurants", "list_markers"})
      */
     private $average_note;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"list_restaurants"})
+     * @Groups({"list_restaurants", "list_markers"})
      */
     private $picture;
 
@@ -67,6 +66,23 @@ class Restaurants
      * @ORM\JoinColumn(nullable=false)
      */
     private $city;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"list_restaurants", "list_markers"})
+     */
+    private $latitude;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"list_restaurants", "list_markers"})
+     */
+    private $longitude;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isApproved;
 
     public function __construct()
     {
@@ -188,6 +204,42 @@ class Restaurants
     public function setCity(?Cities $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?string
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(?string $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?string
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(?string $longitude): self
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getIsApproved(): ?bool
+    {
+        return $this->isApproved;
+    }
+
+    public function setIsApproved(?bool $isApproved): self
+    {
+        $this->isApproved = $isApproved;
 
         return $this;
     }
