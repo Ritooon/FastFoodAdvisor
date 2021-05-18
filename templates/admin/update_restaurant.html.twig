@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification{% endblock %}
+{% block titrePage %}Modification du restaurant #{{restaurant.id}} : {{restaurant.name}} {% endblock %}
+
+{% block body %}
+<div class="row content-container mt-4 p-0 m-0 w-100 justify-content-center">
+    {{form_start(form, { 'attr' : { 'class': 'row w-100' } })}}
+
+        <div class="col-4">
+            <div class="text-center">
+                {% if restaurant.picture == '' or restaurant.picture  == null %}
+                    <img src="{{asset('images/restaurants/restaurant.png')}}" />
+                {% else %}
+                    <img class="img-admin" src="{{ asset('images/restaurants/' ~ restaurant.picture) }}" />
+                {% endif %}
+            </div>
+            {{form_row(form.pictureFile)}}
+        </div>
+
+        <div class="col-8">
+            {{ form_row(form.name, {'class': 'form-control'}) }}
+            {{ form_row(form.address, {'class': 'form-control'}) }}
+            {{ form_row(form.city, {'class': 'form-control city-select'}) }}
+            {{ form_row(form.phone, {'class': 'form-control'}) }}
+            {{ form_row(form.email, {'class': 'form-control'}) }}
+            {{ form_row(form.isApproved, {'class': 'form-control'}) }}
+        </div>
+
+        <div class="col-12 text-right">
+            <a href="{{ path('restaurants_admin') }}" class="btn btn-primary">Retour</a>
+            <button class="btn btn-success mr-1" type="submit">Sauvegarder</button> 
+        </div>
+
+        
+    {{form_end(form)}}
+</div>
+{% endblock %}

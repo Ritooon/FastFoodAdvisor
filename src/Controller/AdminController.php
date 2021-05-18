@@ -4,22 +4,88 @@ namespace App\Controller;
 
 use ArrayObject;
 use App\Entity\Cities;
+use App\Entity\Restaurants;
+use App\Form\RestaurantType;
+use App\Repository\CitiesRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\RestaurantsRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin", name="admin")
+     * @Route("/admin/restaurants", name="restaurants_admin")
      */
-    public function index(): Response
+    public function index(RestaurantsRepository $repo, PaginatorInterface $paginatorInterface, Request $request): Response
     {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+        return $this->render('admin/restaurants.html.twig', [
+            'restaurants' => $paginatorInterface->paginate(
+                $repo->findAllNotDeletedWithPagination(), 
+                $request->query->getInt('page', 1),
+                10
+            )
         ]);
     }
+
+    /**
+     * @Route("/admin/restaurant-deletion/{id}", name="del-restaurant", methods="DEL")
+     */
+    public function delRestaurant(Restaurants $restaurant, Request $request, EntityManagerInterface $emi): Response
+    {
+        if($this->isCsrfTokenValid('DEL'.$restaurant->getId(), $request->get('_token'))) {
+            $restaurant->setIsDeleted(1);
+            $emi->persist($restaurant);
+            $emi->flush();   
+            $this->addFlash('success', "La suppression a bien été effectuée");
+            return $this->redirectToRoute('restaurants_admin');
+        }
+    }
+
+    /**
+     * @Route("/admin/add-restaurant", name="add-restaurant")
+     * @Route("/admin/edit-restaurant/{id}", name="edit-restaurant", methods="GET|POST")
+     */
+    public function addUpdateRestaurant(Restaurants $restaurant = null, Request $request, EntityManagerInterface $emi): Response
+    {
+        if(!$restaurant) {
+            $restaurant = new Restaurants();
+        }
+
+        $form = $this->createForm(RestaurantType::class, $restaurant);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $isModification = !is_null($restaurant->getId());
+            $emi->persist($restaurant);   
+            $emi->flush();   
+            $this->addFlash('success', ($isModification) ? "Restaurant modifié" : "Restaurant ajouté");
+            return $this->redirectToRoute('restaurants_admin');
+        }
+
+        return $this->render('admin/update_restaurant.html.twig', [
+            'restaurant' => $restaurant,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/admin/get-cities-by-name-or-zipcode/{input}", name="city-admin")
+     */
+    public function getCityByNameOrZipcode(CitiesRepository $repo, $input, SerializerInterface $serializer): Response
+    {
+        $cities = $repo->getCitiesByNameOrZipCodeAdmin($input, 5);
+        $json = $serializer->serialize($cities, 'json', ['groups' => 'list_cities']);
+        $results['results'] = json_decode($json);
+
+        return $this->json($results);
+    }
+
 
     /**
      * @Route("/admin/load-cities", name="admin/load-cities")

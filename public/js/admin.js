@@ -13,7 +13,43 @@ $(document).ready(function(){
             loadcity(row, maxRow);
         } 
     });
+
+    $('#restaurant_city').select2({
+        ajax: {
+            url: function(params){
+                return '../get-cities-by-name-or-zipcode/'+params.term
+            },
+            dataType: 'json',
+            data: {}
+          }
+    });
 });
+
+
+function searchCityAdmin()
+{
+    console.log('here')
+    
+    // if(val.length > 0)
+    // {
+    //     $.ajax({
+    //         url: "get-cities-by-name-or-zipcode/"+val, 
+    //         type: 'get', 
+    //     }).done(function (response) {
+    //         if(response.length > 0)
+    //         {
+    //             for(let i = 0; i < response.length; i++)
+    //             {
+    //                 $('#CITY_LIST').append('<option data-value="' + response[i]['id'] + '">'+response[i]['name']+' ('+response[i]['zipcode']+')'+'</option>');
+    //             }
+    //         }
+                
+    //     }).fail(function (error) {
+    //         console.log(error);
+    //     });  
+    // }
+
+}
 
 
 function loadcity(row, maxRow)

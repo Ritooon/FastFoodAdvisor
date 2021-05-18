@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fast Food Advisor - Connexion{% endblock %}
+
+{% block body %}
+    <form class="form-signin" method="POST" action="{{ path('login') }}">
+        {% if error %}
+            <div class="alert alert-danger">{{error.messageKey|trans(error.messagedata, 'security')}}</div>
+        {% endif %}
+        <label for="inputLogin">Nom d'utilisateur</label>
+        <input type="text" id="inputLogin" name="_username" class="form-control" placeholder="Login" value="{{lastUserName}}" required autofocus>
+        <br />
+        <label for="inputPassword">Mot de passe</label>
+        <input type="password" id="inputPassword" name="_password" class="form-control" placeholder="Password" required>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+    </form>
+{% endblock %}

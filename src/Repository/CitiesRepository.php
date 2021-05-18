@@ -30,6 +30,18 @@ class CitiesRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getCitiesByNameOrZipCodeAdmin($value, $limit)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.id, CONCAT(c.name, \' \', \'(\', c.zipcode, \')\')  AS text')
+            ->andWhere('c.name LIKE :val OR c.zipcode LIKE :val')
+            ->setParameter('val', $value.'%')
+            ->orderBy('c.name', 'ASC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Cities[] Returns an array of Cities objects
     //  */

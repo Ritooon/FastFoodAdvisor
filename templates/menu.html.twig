@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Fast Food Advisor</a>
+    <a class="navbar-brand" href="{{ path('accueil') }}"><i class="fas fa-hamburger"></i> Fast Food Advisor</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
@@ -10,11 +10,29 @@
                 <a class="nav-link" href="{{ path('accueil') }}">Accueil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Carte</a>
+                <a class="nav-link" href="{{ path('map') }}">Carte</a>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="#">Restaurants</a>
             </li>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="adminNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Administration
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right text-left" aria-labelledby="adminNavbarDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-images"></i> Approbations photos</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-store-alt-slash"></i> Approbations restaurants</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ path('restaurants_admin') }}"><i class="fas fa-store-alt"></i> Gestion des restaurants</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-star-half"></i> Gestion des notes</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-users-cog"></i> Gestion des utilisateurs</a></li>
+                    </ul>
+                </li>
+            {% endif %}
         </ul>
         <ul class="navbar-nav mr-4">
             <li class="nav-item">
@@ -33,13 +51,13 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right text-left" aria-labelledby="navbarDropdown">
                     {% if not app.user %}
-                        <li><a class="dropdown-item" href="{{ path('register') }}">&#x1F4DD; Inscription</a></li>
-                        <li><a class="dropdown-item" href="#">&#x1F510; Connexion</a></li>
+                        <li><a class="dropdown-item" href="{{ path('register') }}"><i class="fas fa-user-plus"></i> Inscription</a></li>
+                        <li><a class="dropdown-item" href="{{ path('login') }}"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
                     {% else %}
-                        <li><a class="dropdown-item" href="#">&#x1F464; Mon profil</a></li>
-                        <li><a class="dropdown-item" href="#">&#x2B50; Mes notes</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user-edit"></i> Mon profil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-star"></i> Mes notes</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">&#x1F6AA; Déconnexion</a></li>
+                        <li><a class="dropdown-item" href="{{ path('logout') }}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
                     {% endif %}
                 </ul>
             </li>

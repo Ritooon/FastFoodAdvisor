@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FFA Admin - Restaurants{% endblock %}
+
+{% block body %}
+<div class="row content-container  mt-4 p-0 m-0 w-100 justify-content-center">
+    <div class="col-12 text-right mb-1">
+        <a class="btn btn-success" href="{{ path('add-restaurant') }}"><i class="fas fa-plus"></i> Ajouter restaurant</a>
+    </div>
+
+    <div class="col-12">
+        <table class="table">
+            <thead class="bg-primary text-white">
+                <th>#</th>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Ville (CP)</th>
+                <th>Email</th>
+                <th>Tél.</th>
+                <th>Approuvé</th>
+                <th></th>
+            </thead>
+            <tbody>
+                {% for restaurant in restaurants %}
+                    <tr>
+                        <td>{{restaurant.id}}</td>
+                        <td>{{restaurant.name}}</td>
+                        <td>{{restaurant.address}}</td>
+                        <td>{{restaurant.city.name}} ({{restaurant.city.zipcode}})</td>
+                        <td>{{restaurant.email}}</td>
+                        <td>{{restaurant.phone}}</td>
+                        <td>{{restaurant.isApproved}}</td>
+                        <td>
+                            <div class="row">
+                                <a class="btn btn-primary col" href="{{ path('edit-restaurant', {'id': restaurant.id}) }}"><i class="fas fa-pen"></i> Modifier</a>
+
+                                <form class="col" method="POST" action="{{ path('del-restaurant', {'id': restaurant.id}) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+                                    <input type="hidden" name="_method" value="DEL" />
+                                    <input type="hidden" name="_token" value="{{csrf_token('DEL' ~ restaurant.id)}}" />
+                                    <button type="submit" class="col btn btn-danger"><i class="fas fa-trash-alt"></i> Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="navigation navigation-pagination">
+            {{ knp_pagination_render(restaurants) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

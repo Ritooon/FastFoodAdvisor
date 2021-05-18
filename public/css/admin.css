@@ -1,0 +1,8 @@
+.admin-content-bloc {
+    background-color: #ccc;
+    padding: 15px 10px;
+    height: 350px;
+    overflow: auto;
+}
+
+.img-admin { height: 170px; }

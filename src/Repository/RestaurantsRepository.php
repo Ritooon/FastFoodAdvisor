@@ -19,9 +19,19 @@ class RestaurantsRepository extends ServiceEntityRepository
         parent::__construct($registry, Restaurants::class);
     }
 
+    public function findAllNotDeletedWithPagination()
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.isDeleted = 0 OR r.isDeleted IS NULL')
+            ->orderBy('r.id', 'ASC')
+            ->getQuery()
+        ;
+    }
+
     public function getTopFive()
     {
         return $this->createQueryBuilder('r')
+            ->andWhere('(r.isDeleted = 0 OR r.isDeleted IS NULL)')
             ->orderBy('r.average_note', 'ASC')
             ->setMaxResults(5)
             ->getQuery()
@@ -42,6 +52,7 @@ class RestaurantsRepository extends ServiceEntityRepository
             ->andWhere('r.longitude > :longMin')
             ->andWhere('r.longitude < :longMax')
             ->andWhere('r.isApproved = 1')
+            ->andWhere('(r.isDeleted = 0 OR r.isDeleted IS NULL)')
             ->setParameter('latMin', $latMin)
             ->setParameter('latMax', $latMax)
             ->setParameter('longMin', $lngMin)

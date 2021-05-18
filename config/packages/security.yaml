@@ -8,7 +8,7 @@ security:
         in_database: 
             entity:
                 class: App\Entity\Users
-                property: email
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -17,6 +17,12 @@ security:
             anonymous: true
             lazy: true
             provider: in_database
+            form_login:
+                login_path: login
+                check_path: login
+            logout:
+                path: logout
+                target: accueil
             # form_login:
             #     login_path: login
             #     check_path: login
@@ -33,5 +39,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/client, roles: [ROLE_USER, ROLE_ADMIN] }

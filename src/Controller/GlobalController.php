@@ -39,36 +39,4 @@ class GlobalController extends AbstractController
         
         return $this->render('global/blank.html.twig');
     }
-
-    /**
-     * @Route("/account_created", name="account_created")
-     */
-    public function createdAccountMessage(): Response
-    {
-        return $this->render('global/account_created.html.twig');
-    }
-
-    /**
-     * @Route("/register", name="register")
-     */
-    public function register(Request $request, EntityManagerInterface $emi, UserPasswordEncoderInterface $encoder): Response
-    {
-        $user = new Users();
-        $form = $this->createForm(RegisterType::class, $user);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $crypted = $encoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($crypted);
-            $user->setRoles('ROLE_USER');
-            $emi->persist($user);
-            $emi->flush();
-            return $this->redirectToRoute('account_created');
-        }
-
-        return $this->render('global/register.html.twig', [
-            'form' => $form->createView()            
-        ]);
-    }
 }

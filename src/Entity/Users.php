@@ -143,9 +143,16 @@ class Users implements UserInterface
         return $this;
     }
 
-    public function getRoles(): ?string
+    public function getRoles()
     {
-        return $this->role;
+
+        $roles = $this->roles;
+
+        if(gettype($roles) == 'string') {
+            $roles = explode(',', $roles);
+        }
+
+        return $roles;
     }
 
     public function setRoles(string $roles): self

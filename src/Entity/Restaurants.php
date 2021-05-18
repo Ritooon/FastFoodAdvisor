@@ -2,13 +2,17 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass=RestaurantsRepository::class)
+ * @ORM\Entity(repositoryClass=App\Repository\RestaurantsRepository::class)
+ * @Vich\Uploadable
  */
 class Restaurants
 {
@@ -57,6 +61,11 @@ class Restaurants
     private $picture;
 
     /**
+	 * @Vich\UploadableField(mapping="restaurants_pictures", fileNameProperty="picture")
+	 */
+	private $pictureFile;
+
+    /**
      * @ORM\OneToMany(targetEntity=Notes::class, mappedBy="restaurant")
      */
     private $notes;
@@ -83,6 +92,16 @@ class Restaurants
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isApproved;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isDeleted;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $uploadedAt;
 
     public function __construct()
     {
@@ -240,6 +259,47 @@ class Restaurants
     public function setIsApproved(?bool $isApproved): self
     {
         $this->isApproved = $isApproved;
+
+        return $this;
+    }
+
+    public function getIsDeleted(): ?bool
+    {
+        return $this->isDeleted;
+    }
+
+    public function setIsDeleted(?bool $isDeleted): self
+    {
+        $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    public function setPictureFile(?File $pictureFile = null): self
+    {
+        $this->pictureFile = $pictureFile;
+
+		if($this->pictureFile instanceof UploadedFile)
+		{
+			$this->uploadedAt = new \DateTime('now');
+		}
+
+		return $this;
+    }
+
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
+    }
+
+    public function getUploadedAt(): ?\DateTimeInterface
+    {
+        return $this->uploadedAt;
+    }
+
+    public function setUploadedAt(\DateTimeInterface $uploadedAt): self
+    {
+        $this->uploadedAt = $uploadedAt;
 
         return $this;
     }
