@@ -18,3 +18,12 @@ function toogleTheme(theme)
     document.cookie = "theme=" + theme;
     $('body').attr('class', theme);
 }
+
+function hideDisplayLoader(lState)
+{
+    if(lState == 'show') {
+        $('body').append('<i id="site-loader" class="fas fa-spin fa-spinner"></i>');
+    } else {
+        $('#site-loader').remove();
+    }
+}

@@ -67,6 +67,16 @@ a:hover { text-decoration: none; }
 .navigation-pagination { text-align: center; }
 .navigation-pagination nav { display: inline-block; }
 
+#site-loader {
+    z-index: 99;
+    position: fixed;
+    color: #f0ad4e;
+    top: calc(50% - 5rem);
+    left: calc(50% - 5rem);
+    font-size: 15rem;
+    text-shadow: 9px 1px 12px #b9781d;
+}
+
 /*  HOME - TOP 5 */
 
 .card-top5 { 

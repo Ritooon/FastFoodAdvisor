@@ -1,7 +1,25 @@
 var ffaMap;
 
 $(document).ready(function(){
-    ffaMap = L.map('map-container').setView([48.864, 2.331], 13);
+    hideDisplayLoader('show');
+    checkGeoLocation();
+});
+
+function checkGeoLocation()
+{
+    var geoSuccess = function(position) { 
+        loadMap([position.coords.latitude, position.coords.longitude]);
+    };
+    var geoFail = function(){ 
+        loadMap([48.864, 2.331]);
+    };
+
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoFail);
+}
+
+function loadMap(location)
+{
+    ffaMap = L.map('map-container').setView(location, 13);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -12,10 +30,11 @@ $(document).ready(function(){
         accessToken: 'pk.eyJ1Ijoicml0b29vbiIsImEiOiJja29zbmJrZDMwMzN1MnZvYTYxeWwyYmtvIn0.IJ0YuTgbITOhD6trWmC4VQ'
     }).addTo(ffaMap);
 
-    ffaMap.on('moveend', displayReloadBtn);
+    ffaMap.on('moveend', displayReloadBtn); 
 
-    getMarkers(48, 2); 
-});
+    reloadMapMarkers();
+    hideDisplayLoader('hide');
+}
 
 function displayReloadBtn()
 {
@@ -28,6 +47,7 @@ function displayReloadBtn()
 
 function reloadMapMarkers()
 {
+    
     let lat = parseFloat(ffaMap.getCenter().lat).toFixed(3), long = parseFloat(ffaMap.getCenter().lng).toFixed(3);
     getMarkers(lat, long);
     $('.reload-map-btn').remove();
