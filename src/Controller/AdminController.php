@@ -94,6 +94,7 @@ class AdminController extends AbstractController
     {
         $row = 1;
         $cities = [];
+        
         if (($handle = fopen("../scripts/cities.csv", "r")) !== FALSE) 
         {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 

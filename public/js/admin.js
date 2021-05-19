@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+    $('#city-select').val($('#restaurant_city').val());
+
     $('#loadCitiesBtn').off('click').on('click', function(){
 
         let row = 1;
@@ -14,41 +16,37 @@ $(document).ready(function(){
         } 
     });
 
-    $('#restaurant_city').select2({
-        ajax: {
-            url: function(params){
-                return '../get-cities-by-name-or-zipcode/'+params.term
-            },
-            dataType: 'json',
-            data: {}
-          }
-    });
+    $('#city-select').off('keyup').on('keyup', delay(function(){
+        searchCity(this.value);
+    }, 500));
 });
 
-
-function searchCityAdmin()
+function getLatLng()
 {
-    console.log('here')
-    
-    // if(val.length > 0)
-    // {
-    //     $.ajax({
-    //         url: "get-cities-by-name-or-zipcode/"+val, 
-    //         type: 'get', 
-    //     }).done(function (response) {
-    //         if(response.length > 0)
-    //         {
-    //             for(let i = 0; i < response.length; i++)
-    //             {
-    //                 $('#CITY_LIST').append('<option data-value="' + response[i]['id'] + '">'+response[i]['name']+' ('+response[i]['zipcode']+')'+'</option>');
-    //             }
-    //         }
-                
-    //     }).fail(function (error) {
-    //         console.log(error);
-    //     });  
-    // }
+    $('.alert-danger').remove();
 
+
+    let city = $('#city-select').val();    
+    $('#restaurant_city').val(city);
+    let address = $('#restaurant_address').val();
+
+    $.ajax({
+        url: "https://nominatim.openstreetmap.org/search",
+        type: 'get',
+        data: "q="+address+', '+city+"&format=json&addressdetails=1&limit=1&polygon_svg=1" 
+    }).done(function (response) {
+    if(response != ""){
+        $('#restaurant_latitude').val(response[0]['lat']);
+        $('#restaurant_longitude').val(response[0]['lon']);
+        $('form')[0].submit();
+    }
+    else
+    {
+        $('form .form-group:first-child').before('<div class="alert alert-danger" role="alert">Veuillez vérifier l\'adresse et la ville saisies (Lat+Lng non trouvées)</div>');
+    }         
+    }).fail(function (error) {
+        alert(error);
+    });
 }
 
 

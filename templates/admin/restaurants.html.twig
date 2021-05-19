@@ -18,6 +18,7 @@
                 <th>Email</th>
                 <th>Tél.</th>
                 <th>Approuvé</th>
+                <th>Coordonnées GPS</th>
                 <th></th>
             </thead>
             <tbody>
@@ -29,15 +30,28 @@
                         <td>{{restaurant.city.name}} ({{restaurant.city.zipcode}})</td>
                         <td>{{restaurant.email}}</td>
                         <td>{{restaurant.phone}}</td>
-                        <td>{{restaurant.isApproved}}</td>
+                        <td>
+                            {% if restaurant.isApproved %}
+                                <i class="fas fa-2x fa-check-circle text-success"></i>
+                            {% else %}
+                                <i class="fas fa-2x fa-hourglass-start text-warning"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if restaurant.latitude != null and restaurant.longitude != null %}
+                                <i class="fas fa-2x fa-map-marked-alt text-success"></i>
+                            {% else %}
+                                <i class="fas fa-2x fa-map-marked-alt text-danger"></i>
+                            {% endif %}
+                        </td>
                         <td>
                             <div class="row">
-                                <a class="btn btn-primary col" href="{{ path('edit-restaurant', {'id': restaurant.id}) }}"><i class="fas fa-pen"></i> Modifier</a>
+                                <a class="btn btn-primary" href="{{ path('edit-restaurant', {'id': restaurant.id}) }}"><i class="fas fa-pen"></i></a>
 
-                                <form class="col" method="POST" action="{{ path('del-restaurant', {'id': restaurant.id}) }}" onsubmit="return confirm('Confirmer la suppression ?');">
+                                <form class="ml-2" method="POST" action="{{ path('del-restaurant', {'id': restaurant.id}) }}" onsubmit="return confirm('Confirmer la suppression ?');">
                                     <input type="hidden" name="_method" value="DEL" />
                                     <input type="hidden" name="_token" value="{{csrf_token('DEL' ~ restaurant.id)}}" />
-                                    <button type="submit" class="col btn btn-danger"><i class="fas fa-trash-alt"></i> Supprimer</button>
+                                    <button type="submit" class="col btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                             </div>
                         </td>

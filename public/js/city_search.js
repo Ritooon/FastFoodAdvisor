@@ -23,15 +23,16 @@ function searchCity(val)
     
     if(val.length > 0)
     {
+        console.log()
         $.ajax({
-            url: "get-cities-by-name-or-zipcode/"+val, 
+            url: location.protocol + '//' + location.host+"/get-cities-by-name-or-zipcode/"+val, 
             type: 'get', 
         }).done(function (response) {
             if(response.length > 0)
             {
                 for(let i = 0; i < response.length; i++)
                 {
-                    $('#CITY_LIST').append('<option data-value="' + response[i]['id'] + '">'+response[i]['name']+' ('+response[i]['zipcode']+')'+'</option>');
+                    $('#CITY_LIST').append('<option data-cvalue="' + response[i]['id'] + '">'+response[i]['name']+' ('+response[i]['zipcode']+')'+'</option>');
                 }
             }
                 

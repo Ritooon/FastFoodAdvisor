@@ -5,7 +5,7 @@
 
 {% block body %}
 <div class="row content-container mt-4 p-0 m-0 w-100 justify-content-center">
-    {{form_start(form, { 'attr' : { 'class': 'row w-100' } })}}
+    {{form_start(form, { 'attr' : { 'class': 'row w-100', 'onsubmit': 'getLatLng();return false;' } })}}
 
         <div class="col-4">
             <div class="text-center">
@@ -21,12 +21,23 @@
         <div class="col-8">
             {{ form_row(form.name, {'class': 'form-control'}) }}
             {{ form_row(form.address, {'class': 'form-control'}) }}
-            {{ form_row(form.city, {'class': 'form-control city-select'}) }}
+
+            <div class="form-group">
+                {{ form_row(form.city, {'class': 'form-control', 'type': 'hidden'}) }}
+                <input type="text" id="city-select" class="form-control" list="CITY_LIST" />
+                <datalist id="CITY_LIST"></datalist>
+            </div>
+            
             {{ form_row(form.phone, {'class': 'form-control'}) }}
             {{ form_row(form.email, {'class': 'form-control'}) }}
             {{ form_row(form.isApproved, {'class': 'form-control'}) }}
         </div>
 
+        {# TODO : Rajouter les lat et long en input hidden pour les feed en js #}
+        <div style="display:none;">
+            {{ form_row(form.latitude, {'type': 'hidden', 'label': ' '}) }}
+            {{ form_row(form.longitude, {'type': 'hidden', 'label': ' '}) }}
+        </div>
         <div class="col-12 text-right">
             <a href="{{ path('restaurants_admin') }}" class="btn btn-primary">Retour</a>
             <button class="btn btn-success mr-1" type="submit">Sauvegarder</button> 
