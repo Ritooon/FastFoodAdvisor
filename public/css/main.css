@@ -92,6 +92,10 @@ a:hover { text-decoration: none; }
     overflow: hidden;
 }
 
+.card-top5 .card-img-top {
+    height: 60px;
+}
+
 
 /* HOME - SEARCH */
 
