@@ -103,6 +103,11 @@ class Restaurants
      */
     private $uploadedAt;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $website;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -300,6 +305,18 @@ class Restaurants
     public function setUploadedAt(\DateTimeInterface $uploadedAt): self
     {
         $this->uploadedAt = $uploadedAt;
+
+        return $this;
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(?string $website): self
+    {
+        $this->website = $website;
 
         return $this;
     }

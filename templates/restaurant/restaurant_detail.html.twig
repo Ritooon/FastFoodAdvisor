@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fast Food Advisor - {{restaurant.name}}{% endblock %}
+
+{% block body %}
+<div class="row content-container  mt-4 p-0 m-0 w-100 justify-content-center">
+    <div class="col-10 p-4 box-shadow">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-6 p-0 mb-3 text-left">
+                        <a href="{{path('restaurants')}}" class="btn btn-sm btn-primary">Retour à la liste</a>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a href="#" class="btn btn-sm btn-info">Suggérer une modification</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <img class="img-100" src="{{ asset('images/restaurants/' ~ restaurant.picture ) }}" />
+            </div>
+
+            <div class="col-8">
+                <h1>
+                    {{restaurant.name}} 
+                    <span class="note">
+                        {% if restaurant.averageNote is null %}
+                            <i class="fa fa-star text-lightgrey"></i>-
+                        {% else %}
+                            {% if restaurant.averageNote < 5 %}
+                                <i class="fa fa-star-half text-yellow"></i> 
+                            {% else %}
+                                <i class="fa fa-star text-yellow"></i> 
+                            {% endif %}
+                            {{restaurant.averageNote}}
+                        {% endif %}
+                    </span>
+                </h1>
+                <h6><i class="fas fa-map-pin text-danger"></i> {{restaurant.city.name}} ({{restaurant.city.zipcode}}) - {{restaurant.address}}</h6>
+
+                <p class="restaurant-info mt-4"><i class="fas fa-phone-alt"></i> <strong>Tél:</strong> {{(restaurant.phone != null) ? restaurant.phone : '-' }}</p>
+                <p class="restaurant-info"><i class="fas fa-at"></i> <strong>Email:</strong> {{ (restaurant.email != null) ? restaurant.email : '-' }}</p>
+                <p class="restaurant-info"><i class="fab fa-chrome"></i> <strong>Site web:</strong> {{(restaurant.website != null) ? restaurant.website : '-' }}</p>
+            </div>
+
+            <div class="col-12 mt-4">
+                <h4>Vous y êtes déjà allé ? Notez-le !</h4>
+                <div id="rateit"></div>
+                {# <div class="rateit" data-rateit-mode="font" data-rateit-resetable="false"  ddata-rateit-value="2.5" data-rateit-ispreset="true"></div> #}
+
+                {{form_start(rateForm)}}
+                    <div style="display:none;">
+                        {{form_row(rateForm.rating, {'type': 'hidden', 'label': ' ', 'class': 'display-none'})}}
+                    </div>
+                    
+                    {{form_row(rateForm.comment, {'label': 'Commentaire :', 'attr': { 'class': 'w-max-600'}})}}
+
+                    <input type="submit" class="btn btn-sm btn-success" value="Noter"/>
+                {{form_end(rateForm)}}
+            </div>
+
+            <div class="col-12 mt-4">
+                <h4>Ce que les autres en disent</h4>
+
+                {% if restaurant.notes|length == 0 %}
+                    <p class="alert alert-primary"><i class="far fa-comment"></i> Hum, il semblerait que personne n'ait encore noté cet établissement ... </p>
+                {% else %}
+                    {% for note in restaurant.notes %}
+                        <div class="row">
+                            <div class="col-1">
+                                <img src="{{asset('images/users/no_pic.png')}}" style="height:60px;" />
+                            </div>
+
+                            <div class="col">
+                                <div>
+                                    {{note.user.username}}
+                                    <div class="rateit inline-block small-rate" data-rateit-mode="font" data-rateit-value="{{note.rating}}" style="vertical-align: bottom;" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+                                </div>
+                                <p>
+                                    {{note.comment}}
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

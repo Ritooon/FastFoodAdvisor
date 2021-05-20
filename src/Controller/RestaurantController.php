@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Notes;
+use App\Form\NotesType;
+use App\Entity\Restaurants;
 use App\Entity\SearchRestaurant;
 use App\Form\SearchRestaurantType;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\RestaurantsRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,14 +40,27 @@ class RestaurantController extends AbstractController
     /**
      * @Route("/restaurant/{id}", name="restaurant")
      */
-    public function restaurantsDetails(RestaurantsRepository $repo, PaginatorInterface $paginatorInterface, Request $request): Response
+    public function restaurantsDetails(Request $request, EntityManagerInterface $emi, Restaurants $restaurant, Notes $note = null): Response
     {
+        if(!$note) { $note = new Notes(); }
+
+        $rateForm = $this->createform(NotesType::class);
+        $rateForm->handleRequest($request);
+
+        if($rateForm->isSubmitted() && $rateForm->isValid())
+        {
+            $note = $rateForm->getData();
+            $note->setRestaurant($restaurant);
+            $note->setUser($this->getUser());
+            $emi->persist($note);
+            $emi->flush();   
+            $this->addFlash('success', "Merci pour ta note ! Elle a bien été prise en compte");
+            return $this->redirectToRoute('restaurant/'.$restaurant->getId());
+        }
+
         return $this->render('restaurant/restaurant_detail.html.twig', [
-            'restaurants' => $paginatorInterface->paginate(
-                $repo->findAllNotDeletedWithPagination(), 
-                $request->query->getInt('page', 1),
-                10
-            )
+            'restaurant' => $restaurant,
+            'rateForm' => $rateForm->createView()
         ]);
     }
 }
