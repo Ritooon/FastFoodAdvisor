@@ -75,19 +75,6 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/get-cities-by-name-or-zipcode/{input}", name="city-admin")
-     */
-    public function getCityByNameOrZipcode(CitiesRepository $repo, $input, SerializerInterface $serializer): Response
-    {
-        $cities = $repo->getCitiesByNameOrZipCodeAdmin($input, 5);
-        $json = $serializer->serialize($cities, 'json', ['groups' => 'list_cities']);
-        $results['results'] = json_decode($json);
-
-        return $this->json($results);
-    }
-
-
-    /**
      * @Route("/admin/load-cities", name="admin/load-cities")
      */
     public function loadCities()

@@ -46,11 +46,8 @@ class CitiesTransformer implements DataTransformerInterface
         $cityNameZip = trim($cityNameZip);
 
         $name = trim(substr($cityNameZip, 0, strpos($cityNameZip, '(')));
-        $zipcode = trim(substr(
-            $cityNameZip, 
-            strpos($cityNameZip, '(')+1, 
-            strpos($cityNameZip, ')')-9
-        ));
+        $zipcode = trim(substr($cityNameZip, strpos($cityNameZip, '(')+1));
+        $zipcode = substr($zipcode, 0, strlen($zipcode)-1);
 
         $city = $this->entityManager
             ->getRepository(Cities::class)

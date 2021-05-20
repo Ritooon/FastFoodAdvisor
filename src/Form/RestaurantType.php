@@ -36,16 +36,6 @@ class RestaurantType extends AbstractType
             ->add('city', TextType::class, [
                 'invalid_message' => 'Cette ville n\'existe pas',
             ])
-            // ->add('city', EntityType::class, [
-            //     'class' => Cities::class,
-            //     'query_builder' => function (CitiesRepository $cr) {
-            //         return $cr->createQueryBuilder('c')
-            //             ->orderBy('c.name', 'ASC');
-            //     },
-            //     'choice_label' => function(Cities $city) {
-            //         return $city->getName().' ('.$city->getZipcode().')';
-            //     }
-            // ])
         ;
 
         $builder->get('city')

@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    $('.search_input').off('keyup').on('keyup', delay(function(){
+    $('.search_input, .city_search').off('keyup').on('keyup', delay(function(){
         searchCity(this.value);
     }, 500));
 });

@@ -77,6 +77,11 @@ a:hover { text-decoration: none; }
     text-shadow: 9px 1px 12px #b9781d;
 }
 
+.form-control:focus, .btn:focus {
+    border-color: transparent!important;
+    box-shadow: none!important;
+}
+
 /*  HOME - TOP 5 */
 
 .card-top5 { 

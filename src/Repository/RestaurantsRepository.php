@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
 use App\Entity\Restaurants;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\SearchRestaurant;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Restaurants|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,13 +21,30 @@ class RestaurantsRepository extends ServiceEntityRepository
         parent::__construct($registry, Restaurants::class);
     }
 
-    public function findAllNotDeletedWithPagination()
+    public function findAllNotDeletedWithPagination(SearchRestaurant $filter = null)
     {
-        return $this->createQueryBuilder('r')
+        $qb = $this->createQueryBuilder('r')
             ->andWhere('r.isDeleted = 0 OR r.isDeleted IS NULL')
-            ->orderBy('r.id', 'ASC')
+        ;
+
+        if($filter)
+        {
+            if($filter->getName()) {
+                $qb->andWhere('r.name LIKE :name')
+                    ->setParameter(':name', '%'.$filter->getName().'%');
+            }
+
+            if($filter->getCity()) {
+                $qb->andWhere('r.city = :city')
+                    ->setParameter(':city', $filter->getCity());
+            }
+        }
+
+        $qb->orderBy('r.id', 'ASC')
             ->getQuery()
         ;
+
+        return $qb;
     }
 
     public function getTopFive()
