@@ -68,7 +68,13 @@ function getMarkers(latMax, longMax)
                 let restaurant = response[i];
                 let averageNote = restaurant.average_note == null ? '-' : restaurant.average_note;
                 let marker = L.marker([restaurant.latitude, restaurant.longitude]).addTo(ffaMap);
-                marker.bindPopup("<b>"+restaurant.name+"</b><br>Note moyenne : " +  averageNote);
+                let linkToRestaurant = '/restaurant/'+restaurant.id;
+
+                marker.bindPopup(
+                    '<b>'+restaurant.name+'</b><br>'
+                    +'Note moyenne : ' +  averageNote+'<br>'
+                    +'<a href="'+linkToRestaurant+'">Voir ce restaurant</a>'
+                );
             }
         }
     }).fail(function (error) {

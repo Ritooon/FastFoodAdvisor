@@ -6,10 +6,16 @@
 <div class="row content-container  mt-4 p-0 m-0 w-100 justify-content-center">
     <div class="col-10 p-4 box-shadow">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 ml-3">
                 <div class="row">
                     <div class="col-6 p-0 mb-3 text-left">
-                        <a href="{{path('restaurants')}}" class="btn btn-sm btn-primary">Retour à la liste</a>
+                        <a href="{{app.request.headers.get('referer')}}" class="btn btn-sm btn-primary">
+                            {% if 'map' in app.request.headers.get('referer') %}
+                                Retour à la carte
+                            {% else %}
+                                Retour à la liste
+                            {% endif %}
+                        </a>
                     </div>
                     <div class="col-6 text-right">
                         <a href="#" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#suggestionModal">Suggérer une modification</a>
