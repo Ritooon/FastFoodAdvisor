@@ -19,6 +19,7 @@ $(document).ready(function(){
     $('#city-select').off('keyup').on('keyup', delay(function(){
         searchCity(this.value);
     }, 500));
+
 });
 
 function getLatLng()

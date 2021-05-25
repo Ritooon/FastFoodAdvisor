@@ -12,7 +12,7 @@
                         <a href="{{path('restaurants')}}" class="btn btn-sm btn-primary">Retour à la liste</a>
                     </div>
                     <div class="col-6 text-right">
-                        <a href="#" class="btn btn-sm btn-info">Suggérer une modification</a>
+                        <a href="#" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#suggestionModal">Suggérer une modification</a>
                     </div>
                 </div>
             </div>
@@ -45,36 +45,57 @@
             </div>
 
             <div class="col-12 mt-4">
-                <h4>Vous y êtes déjà allé ? Notez-le !</h4>
-                <div id="rateit"></div>
-                {# <div class="rateit" data-rateit-mode="font" data-rateit-resetable="false"  ddata-rateit-value="2.5" data-rateit-ispreset="true"></div> #}
+                
+                    <h5>Album photo : </h5>                
+                    <div id="my_nanogallery2" class="mb-4 inline-block" data-nanogallery2 = '{"thumbnailHeight":  50, "thumbnailWidth":   50, "thumbnailAlignment": "left", 
+                        "itemsBaseURL": "{{asset('images/restaurants/')}}"}'>
+                        {% if restaurant.picture != null or restaurant.pictures|length > 0 %}
+                            {% if restaurant.picture != null %}
+                                <a href="{{restaurant.picture}}" data-ngthumb="{{restaurant.picture}}"></a>
+                            {% endif %}
 
-                {{form_start(rateForm)}}
-                    <div style="display:none;">
-                        {{form_row(rateForm.rating, {'type': 'hidden', 'label': ' ', 'class': 'display-none'})}}
+                            {% for picture in restaurant.pictures %}
+                                <a href="{{picture.name}}" data-ngthumb="{{restaurant.name}}"></a>
+                            {% endfor %}
+                        {% endif %}
                     </div>
-                    
-                    {{form_row(rateForm.comment, {'label': 'Commentaire :', 'attr': { 'class': 'w-max-600'}})}}
 
-                    <input type="submit" class="btn btn-sm btn-success" value="Noter"/>
-                {{form_end(rateForm)}}
+                    <div class="add-photos inline-block">
+                        <i class="fas fa-plus fa-2x"></i>
+                    </div>
+
+                {% if app.user != null %}
+                    <h4>Vous y êtes déjà allé ? Notez-le !</h4>
+                    <div id="rateit" data-rateit-value="{{note.rating}}"></div>                
+
+                    {{form_start(rateForm, {'attr': {'class': 'mb-4'}})}}
+                        <div style="display:none;">
+                            {{form_row(rateForm.rating, {'type': 'hidden', 'label': ' ', 'class': 'display-none', 'value': note.rating})}}
+                        </div>
+                        
+                        {{form_row(rateForm.comment, {'label': 'Commentaire :', 'value': note.comment, 'attr': { 'class': 'w-max-600'}})}}
+
+                        <input type="submit" class="btn btn-sm btn-success" value="Noter"/>
+                    {{form_end(rateForm)}}
+                {% endif %}
             </div>
 
-            <div class="col-12 mt-4">
+            <div class="col-12">
                 <h4>Ce que les autres en disent</h4>
 
                 {% if restaurant.notes|length == 0 %}
                     <p class="alert alert-primary"><i class="far fa-comment"></i> Hum, il semblerait que personne n'ait encore noté cet établissement ... </p>
                 {% else %}
                     {% for note in restaurant.notes %}
-                        <div class="row">
+                        <div class="row mt-3">
                             <div class="col-1">
                                 <img src="{{asset('images/users/no_pic.png')}}" style="height:60px;" />
                             </div>
 
                             <div class="col">
                                 <div>
-                                    {{note.user.username}}
+                                    {{note.user.username}} 
+                                    {% if app.user != null and note.user.username == app.user.username %} (Vous){% endif %}
                                     <div class="rateit inline-block small-rate" data-rateit-mode="font" data-rateit-value="{{note.rating}}" style="vertical-align: bottom;" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
                                 </div>
                                 <p>
@@ -88,5 +109,6 @@
         </div>
     </div>
     
+    {% include "restaurant/suggestion.html.twig" %}
 </div>
 {% endblock %}

@@ -67,6 +67,7 @@ class Restaurants
 
     /**
      * @ORM\OneToMany(targetEntity=Notes::class, mappedBy="restaurant")
+     * @ORM\OrderBy({"updatedAt" = "DESC"})
      */
     private $notes;
 
@@ -108,9 +109,32 @@ class Restaurants
      */
     private $website;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="restaurants")
+     */
+    private $tags;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Users::class, inversedBy="restaurants")
+     */
+    private $user_creation;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="restaurant")
+     */
+    private $pictures;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ModificationSuggestion::class, mappedBy="restaurant")
+     */
+    private $modificationSuggestions;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
+        $this->modificationSuggestions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -317,6 +341,105 @@ class Restaurants
     public function setWebsite(?string $website): self
     {
         $this->website = $website;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->removeElement($tag)) {
+            $tag->removeRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function getUserCreation(): ?Users
+    {
+        return $this->user_creation;
+    }
+
+    public function setUserCreation(?Users $user_creation): self
+    {
+        $this->user_creation = $user_creation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Picture[]
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getRestaurant() === $this) {
+                $picture->setRestaurant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ModificationSuggestion[]
+     */
+    public function getModificationSuggestions(): Collection
+    {
+        return $this->modificationSuggestions;
+    }
+
+    public function addModificationSuggestion(ModificationSuggestion $modificationSuggestion): self
+    {
+        if (!$this->modificationSuggestions->contains($modificationSuggestion)) {
+            $this->modificationSuggestions[] = $modificationSuggestion;
+            $modificationSuggestion->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModificationSuggestion(ModificationSuggestion $modificationSuggestion): self
+    {
+        if ($this->modificationSuggestions->removeElement($modificationSuggestion)) {
+            // set the owning side to null (unless already changed)
+            if ($modificationSuggestion->getRestaurant() === $this) {
+                $modificationSuggestion->setRestaurant(null);
+            }
+        }
 
         return $this;
     }

@@ -39,6 +39,11 @@ class Notes
      */
     private $rating;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -88,6 +93,19 @@ class Notes
     public function setRating(?float $rating): self
     {
         $this->rating = $rating;
+        $this->setUpdatedAt(new \DateTime('now'));
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

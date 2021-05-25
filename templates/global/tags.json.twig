@@ -1,0 +1,8 @@
+{"results": [
+        {%- for tag in tags -%}
+            {"id": {{ tag.id }}, "text": "{{ tag.name }}"}{% if not loop.last %},{% endif %}
+        {%- endfor -%}
+],
+"pagination": {
+  "more": false
+}}

@@ -54,9 +54,21 @@ class Users implements UserInterface
      */
     private $roles;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Restaurants::class, mappedBy="user_creation")
+     */
+    private $restaurants;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ModificationSuggestion::class, mappedBy="user")
+     */
+    private $modificationSuggestions;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
+        $this->restaurants = new ArrayCollection();
+        $this->modificationSuggestions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -170,5 +182,65 @@ class Users implements UserInterface
     public function eraseCredentials()
     {
         
+    }
+
+    /**
+     * @return Collection|Restaurants[]
+     */
+    public function getRestaurants(): Collection
+    {
+        return $this->restaurants;
+    }
+
+    public function addRestaurant(Restaurants $restaurant): self
+    {
+        if (!$this->restaurants->contains($restaurant)) {
+            $this->restaurants[] = $restaurant;
+            $restaurant->setUserCreation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRestaurant(Restaurants $restaurant): self
+    {
+        if ($this->restaurants->removeElement($restaurant)) {
+            // set the owning side to null (unless already changed)
+            if ($restaurant->getUserCreation() === $this) {
+                $restaurant->setUserCreation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ModificationSuggestion[]
+     */
+    public function getModificationSuggestions(): Collection
+    {
+        return $this->modificationSuggestions;
+    }
+
+    public function addModificationSuggestion(ModificationSuggestion $modificationSuggestion): self
+    {
+        if (!$this->modificationSuggestions->contains($modificationSuggestion)) {
+            $this->modificationSuggestions[] = $modificationSuggestion;
+            $modificationSuggestion->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModificationSuggestion(ModificationSuggestion $modificationSuggestion): self
+    {
+        if ($this->modificationSuggestions->removeElement($modificationSuggestion)) {
+            // set the owning side to null (unless already changed)
+            if ($modificationSuggestion->getUser() === $this) {
+                $modificationSuggestion->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

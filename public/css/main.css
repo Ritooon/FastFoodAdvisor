@@ -252,6 +252,21 @@ a:hover { text-decoration: none; }
     z-index: 400;
 }
 
+/* RESTAURANT VIEW */
+
+.add-photos {
+    width: 50px;
+    height: 54px;
+    line-height: 64px;
+    text-align: center;
+    border: 2px solid black;
+    vertical-align: top;
+    margin-top: 3px;
+    background-color: #e8e8e8;
+    color: #5a5a5a;
+    cursor: pointer;
+}
+
 /* DARK THEME */
 body.dark-theme { background-color: #3b3d46; }
 body.dark-theme * { color: #fff; }

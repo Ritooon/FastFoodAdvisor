@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css') }}">
         <link rel="stylesheet" href="{{ asset('css/leaflet.css') }}">
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('css/nanogallery2.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/rateit.css') }}">
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
         {% if '/admin' in app.request.uri %}
@@ -35,6 +36,7 @@
             <script src="{{ asset('js/map.js') }}"></script>
         {% endif %}
         {% if '/restaurant' in app.request.uri %}
+            <script src="{{ asset('js/jquery.nanogallery2.core.min.js') }}"></script>
             <script src="{{ asset('js/jquery.rateit.js') }}"></script>
             <script src="{{ asset('js/restaurant.js') }}"></script>
         {% endif %}

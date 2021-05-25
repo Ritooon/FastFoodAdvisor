@@ -1,0 +1,30 @@
+<div class="modal fade" id="suggestionModal" tabindex="-1" aria-labelledby="suggestionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="suggestionModalLabel">Demande de modification</h5>
+                <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+            </div>
+
+            {% if pendingModification|length > 0 %}
+                <div class="modal-body"><p class="alert alert-success p-3">Merci pour ta suggestion de modification ! Elle est en cours de prise en compte par notre équipe !</p></div>
+            {% else %}
+                {{form_start(modificationForm)}}
+                    <div class="modal-body">
+                        {{form_row(modificationForm.restaurantName, {'label': 'Nom du restaurant', 'class': 'form-control', 'value': restaurant.name})}}
+                        {{form_row(modificationForm.phone, {'label': 'Tél.', 'class': 'form-control', 'value': restaurant.phone})}}
+                        {{form_row(modificationForm.email, {'label': 'Email', 'class': 'form-control', 'value': restaurant.email})}}
+                        {{form_row(modificationForm.website, {'label': 'Site web', 'class': 'form-control', 'value': restaurant.website})}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Envoyer la demande</button>
+                    </div>
+                {{form_end(modificationForm)}}
+            {% endif %}
+
+            
+
+        </div>
+    </div>
+</div>
